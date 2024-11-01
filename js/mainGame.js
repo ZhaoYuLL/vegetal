@@ -1,3 +1,11 @@
+/**
+ * Contains all game states and their properties:
+ * - text: Story text to display
+ * - image: Path to state's image
+ * - choices: Object containing:
+ *   - choice text
+ *   - array with [next state, personality types to increment]
+ */
 const gameData = {
     "1": {
         "text": "You and your veggie friends want to hangout in VeggieVille. What snacks are you bringing?",
@@ -487,6 +495,12 @@ const gameData = {
 
 
 };
+/**
+ * Tracks scores for each personality type
+ * Each vegetable represents a different personality archetype:
+ * - Keys: Vegetable names
+ * - Values: Current score for that personality
+ */
 const personalities = { 
     "Onion": 0,
     "Broccoli": 0,
@@ -504,6 +518,22 @@ const personalities = {
 
 let currentState = 1;
 
+/**
+ * Renders the current game state by updating the UI elements
+ * @param {string|number} state - The current state ID from gameData
+ * 
+ * This function:
+ * 1. Gets references to DOM elements (story text, image, choices container)
+ * 2. Preloads the state's image
+ * 3. Once image loads:
+ *    - Updates the story image
+ *    - Sets the story text
+ *    - Clears and rebuilds the choice buttons
+ *    - Each button is configured with:
+ *      - The choice text
+ *      - CSS class for styling
+ *      - Click handler to trigger state change
+ */
 function renderState(state) {
     const storyText = document.getElementById('story-text');
     const storyImage = document.getElementById('story-image');
@@ -529,6 +559,18 @@ function renderState(state) {
 }
 
 
+/**
+ * Updates the game state and personality scores
+ * @param {string|number} newState - The next state to transition to
+ * @param {Array} selectedPersonalities - Array of personality types to increment
+ * 
+ * This function:
+ * 1. Increments the score for each selected personality type
+ * 2. Updates the current state
+ * 3. Either:
+ *    - Reveals final result if state is 0
+ *    - Renders the next state otherwise
+ */
 function changeState(newState, selectedPersonalities) { 
     // console.log(personalities); 
     selectedPersonalities.forEach(personality => {
@@ -537,12 +579,26 @@ function changeState(newState, selectedPersonalities) {
 
     currentState = newState;
 
+    // If the game is over, reveal the most selected vegetable
     if (currentState === 0) {
         revealMostSelectedVegetable();
     } else {
         renderState(currentState);
     }
 }
+/**
+ * Determines and displays the user's final vegetable personality
+ * 
+ * This function:
+ * 1. Finds the vegetable with highest score
+ * 2. Hides game UI elements
+ * 3. Loads and displays the corresponding veggie ID card image
+ * !this is where we can recommend what to do based on the personality
+ * 4. Creates a share button that:
+ *    - Copies game link to clipboard
+ *    - Shows success/failure alert
+ * 5. Updates text content with final message
+ */
 function revealMostSelectedVegetable() {
     let maxCount = 0;
     let maxVeggie = '';
