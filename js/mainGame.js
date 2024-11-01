@@ -2,6 +2,7 @@ const gameData = {
     "1": {
         "text": "You and your veggie friends want to hangout in VeggieVille. What snacks are you bringing?",
         "image" : "smaller_images/snackies.png",
+        // so beef stick will led the user wieght towards japapeno and bokchoy
 "choices": {
             "Beef sticks": [2,["Jalapeno","Bok Choy"]],
             "Granola": [2,["Broccoli", "Garlic", "Pumpkin"]],
