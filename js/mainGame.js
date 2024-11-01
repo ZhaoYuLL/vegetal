@@ -593,7 +593,7 @@ function changeState(newState, selectedPersonalities) {
  * 1. Finds the vegetable with highest score
  * 2. Hides game UI elements
  * 3. Loads and displays the corresponding veggie ID card image
- * !this is where we can recommend what to do based on the personality
+ * !this is where we can recommend what to do based on the personality(in the id_cards)
  * 4. Creates a share button that:
  *    - Copies game link to clipboard
  *    - Shows success/failure alert
